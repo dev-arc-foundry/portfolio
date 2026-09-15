@@ -1,0 +1,323 @@
+@import "tailwindcss";
+
+/*
+ * Catppuccin Latte / Mocha. One definition per token: light-dark() picks the arm
+ * from the resolved color-scheme, so system preference and an explicit choice
+ * cannot drift apart the way two hand-maintained palettes could.
+ */
+:root {
+  --bg: light-dark(#eff1f5, #1e1e2e);
+  --surface: light-dark(#ffffff, #313244);
+  --surface-2: light-dark(#e6e9ef, #45475a);
+  --text: light-dark(#4c4f69, #cdd6f4);
+  --muted: light-dark(#5c5f77, #a6adc8);
+  --line: light-dark(rgb(76 79 105 / 0.14), rgb(205 214 244 / 0.08));
+  --line-strong: light-dark(rgb(76 79 105 / 0.26), rgb(205 214 244 / 0.16));
+  --accent: light-dark(#fe640b, #fab387);
+  --accent-soft: light-dark(rgb(254 100 11 / 0.1), rgb(250 179 135 / 0.12));
+  --steel: light-dark(#1e66f5, #89b4fa);
+  --teal: light-dark(#179299, #94e2d5);
+  /* Latte's peach, green and teal sit at 2.6-3.3:1 on this background, so they
+     read as decoration only. These darkened variants carry the same hues into
+     anything that is actually text; in Mocha they collapse back to the base. */
+  --accent-ink: light-dark(#a84c04, #fab387);
+  --green-ink: light-dark(#2d7520, #a6e3a1);
+  --teal-ink: light-dark(#0e6f74, #94e2d5);
+  /* The only "text that sits on the accent" colour. Catppuccin Crust, both themes. */
+  --on-accent: #11111b;
+  --tilt-shadow: 0 18px 40px light-dark(rgb(76 79 105 / 0.18), rgb(0 0 0 / 0.45));
+  /* Header height. The anchor offset below is derived from it, not guessed. */
+  --nav-h: 4rem;
+}
+
+/* The toggle writes only data-theme; this is what light-dark() actually reads. */
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+  --color-steel: var(--steel);
+  --color-teal: var(--teal);
+  --color-accent-ink: var(--accent-ink);
+  --color-green-ink: var(--green-ink);
+  --color-teal-ink: var(--teal-ink);
+  --font-sans: var(--font-instrument-sans);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+
+  html {
+    color-scheme: light dark;
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--nav-h) + 1rem);
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+  }
+
+  ::selection {
+    background-color: var(--accent-soft);
+    color: var(--text);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+/* The two typographic recipes every section shares. */
+.section-title {
+  font-size: clamp(2rem, 3.6vw, 3.25rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+
+.section-body {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* Outlined tag. Callers supply their own padding and text size. */
+.pill-teal {
+  border-radius: 9999px;
+  border: 1px solid var(--teal);
+  color: var(--text);
+  transition:
+    color 0.2s ease,
+    text-shadow 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.pill-teal:hover {
+  color: var(--teal-ink);
+  box-shadow: 0 0 8px var(--teal);
+  text-shadow: 0 0 8px var(--teal);
+}
+
+@keyframes fade-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Entrance animation. Reveal adds .is-visible once the element scrolls into view. */
+.reveal {
+  opacity: 0;
+}
+
+.reveal.is-visible {
+  animation: fade-rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--reveal-delay, 0s);
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+/* Gradient that sweeps side to side through the glyphs. */
+@keyframes text-shimmer {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 200% 50%;
+  }
+}
+
+.text-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    var(--muted),
+    var(--accent-ink),
+    var(--steel),
+    var(--accent-ink),
+    var(--muted)
+  );
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: text-shimmer 5s linear infinite;
+}
+
+/* Pointer-tracked glow. SpotlightCard writes --spot-x/--spot-y on hover. */
+.spotlight-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    320px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    var(--accent-soft),
+    transparent 70%
+  );
+  transition: opacity 0.3s ease;
+}
+
+.group:hover .spotlight-glow {
+  opacity: 1;
+}
+
+/* Pointer-tracked tilt. The surface rotates away from the cursor and settles a
+   little smaller, so the card reads as pushed back into the page rather than
+   lifted off it. TiltCard writes --tilt-rx/--tilt-ry each frame. */
+.tilt-card {
+  transition: box-shadow 0.2s ease;
+}
+
+.tilt-card.is-tilting {
+  box-shadow: var(--tilt-shadow);
+}
+
+.tilt-surface {
+  transform: perspective(2500px) rotateX(var(--tilt-rx, 0deg))
+    rotateY(var(--tilt-ry, 0deg)) scale(var(--tilt-s, 1));
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Specular sweep that tracks the pointer across the surface. */
+.tilt-glare {
+  position: absolute;
+  inset: -60%;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    circle at var(--tilt-gx, 50%) var(--tilt-gy, 50%),
+    rgb(255 255 255 / 0.35),
+    rgb(255 255 255 / 0) 45%
+  );
+  transition: opacity 0.15s ease;
+}
+
+.tilt-card.is-tilting .tilt-glare {
+  opacity: 0.55;
+}
+
+@keyframes orb-spin-cw {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orb-spin-ccw {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes orb-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+.orb-ring-cw {
+  transform-origin: 140px 140px;
+  animation: orb-spin-cw 48s linear infinite;
+}
+
+.orb-ring-ccw {
+  transform-origin: 140px 140px;
+  animation: orb-spin-ccw 32s linear infinite;
+}
+
+.orb-pulse {
+  transform-origin: 140px 140px;
+  animation: orb-breathe 3.6s ease-in-out infinite;
+}
+
+/* One list of decorations that are suppressed, and when. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .schematic-pulse-dot,
+  .orb-orbit-dot,
+  .tilt-glare,
+  .spotlight-glow {
+    display: none !important;
+  }
+
+  .tilt-surface {
+    transform: none !important;
+  }
+
+  /* Reveal never observes under reduced motion, so .is-visible never arrives. */
+  .reveal {
+    opacity: 1;
+  }
+
+  /* A frozen gradient would sit at whatever slice happened to be showing; use flat text instead. */
+  .text-shimmer {
+    background-image: none;
+    color: var(--text);
+    -webkit-text-fill-color: var(--text);
+  }
+}
+
+@media (pointer: coarse) {
+  .tilt-surface {
+    transform: none !important;
+  }
+
+  .tilt-glare,
+  .spotlight-glow {
+    display: none !important;
+  }
+}

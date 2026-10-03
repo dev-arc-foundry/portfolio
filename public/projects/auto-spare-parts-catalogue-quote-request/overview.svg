@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Auto Spare Parts — Catalogue screenshot placeholder</title>
+  <desc id="desc">Labeled placeholder 01. Replace with the final project screenshot.</desc>
+  <defs><pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" fill="none" stroke="#45475a" stroke-opacity=".35"/></pattern></defs>
+  <rect width="1600" height="1000" fill="#1e1e2e"/>
+  <rect width="1600" height="1000" fill="url(#grid)"/>
+  <rect x="72" y="72" width="1456" height="856" rx="32" fill="#313244" stroke="#45475a" stroke-width="2"/>
+  <path d="M72 168H1528" stroke="#45475a" stroke-width="2"/>
+  <circle cx="120" cy="120" r="8" fill="#fab387"/><circle cx="152" cy="120" r="8" fill="#94e2d5"/><circle cx="184" cy="120" r="8" fill="#89b4fa"/>
+  <text x="1456" y="127" text-anchor="end" font-family="monospace" font-size="18" fill="#a6adc8">DEVARC FOUNDRY</text>
+  <rect x="696" y="330" width="208" height="64" rx="32" fill="#1e1e2e" stroke="#94e2d5"/>
+  <text x="800" y="371" text-anchor="middle" font-family="monospace" font-size="22" fill="#94e2d5">PLACEHOLDER 01</text>
+  <text x="800" y="490" text-anchor="middle" font-family="sans-serif" font-size="64" fill="#cdd6f4">Auto Spare Parts</text>
+  <text x="800" y="567" text-anchor="middle" font-family="sans-serif" font-size="40" fill="#fab387">Catalogue</text>
+  <text x="800" y="657" text-anchor="middle" font-family="monospace" font-size="24" fill="#a6adc8">Final screenshot to be added</text>
+  <path d="M704 745H896" stroke="#94e2d5" stroke-width="3" stroke-linecap="round"/>
+</svg>

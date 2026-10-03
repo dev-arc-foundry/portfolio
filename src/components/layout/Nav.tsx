@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { siteConfig } from "@/config/site";
 import { BrandMark } from "@/components/ui/BrandMark";
 import { ButtonLink } from "@/components/ui/ButtonLink";
@@ -10,6 +11,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import { MobileMenu } from "./MobileMenu";
 
 export function Nav() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -36,18 +38,20 @@ export function Nav() {
           <span>{siteConfig.wordmark}</span>
         </Link>
 
-        <nav aria-label="Primary" className="hidden items-center gap-8 md:flex">
+        <nav aria-label="Primary" className="hidden items-center gap-5 xl:flex">
           <NavLinks />
         </nav>
 
-        <div className="flex items-center gap-2 md:gap-4">
+        <div className="flex items-center gap-2 xl:gap-4">
           <ThemeToggle />
-          <ButtonLink
-            href="#contact"
-            className="hidden px-5 py-2.5 text-sm md:inline-flex"
-          >
-            Start a Project
-          </ButtonLink>
+          <div className="hidden xl:block">
+            <ButtonLink
+              href={pathname === "/" ? "#contact" : "/#contact"}
+              className="px-5 py-2.5 text-sm"
+            >
+              Start a Project
+            </ButtonLink>
+          </div>
           <MobileMenu />
         </div>
       </div>

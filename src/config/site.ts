@@ -33,6 +33,7 @@ export const siteConfig = {
     { label: "Expertise", href: "#expertise" },
     { label: "Experience", href: "#experience" },
     { label: "Team", href: "#team" },
+    { label: "Projects", href: "#projects" },
     { label: "Process", href: "#process" },
   ] satisfies NavLink[],
 };

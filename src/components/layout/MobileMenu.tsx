@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { createPortal } from "react-dom";
 import { Menu, X } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { NavLinks } from "./NavLinks";
 
 export function MobileMenu() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -64,7 +66,7 @@ export function MobileMenu() {
         onClick={() => setOpen(true)}
         aria-label="Open menu"
         aria-expanded={open}
-        className="flex h-10 w-10 items-center justify-center rounded-full text-text md:hidden"
+        className="flex h-10 w-10 items-center justify-center rounded-full text-text xl:hidden"
       >
         <Menu className="h-5 w-5" aria-hidden="true" />
       </button>
@@ -76,9 +78,9 @@ export function MobileMenu() {
             role="dialog"
             aria-modal="true"
             aria-label="Mobile navigation"
-            className="fixed inset-0 z-50 flex flex-col bg-bg"
+            className="fixed inset-0 z-50 flex flex-col overflow-y-auto overscroll-contain bg-bg"
           >
-            <div className="flex h-16 items-center justify-end px-6">
+            <div className="sticky top-0 z-10 flex h-16 shrink-0 items-center justify-end bg-bg px-6">
               <button
                 type="button"
                 onClick={close}
@@ -91,7 +93,7 @@ export function MobileMenu() {
 
             <nav
               aria-label="Primary"
-              className="flex flex-1 flex-col justify-center gap-8 px-8"
+              className="flex flex-1 flex-col justify-center gap-8 px-8 py-6"
             >
               <NavLinks
                 className="text-3xl font-medium tracking-tight text-text"
@@ -99,8 +101,8 @@ export function MobileMenu() {
               />
             </nav>
 
-            <div className="px-8 pb-12">
-              <ButtonLink href="#contact" onClick={close} className="w-full">
+            <div className="shrink-0 px-8 pb-12">
+              <ButtonLink href={pathname === "/" ? "#contact" : "/#contact"} onClick={close} className="w-full">
                 Start a Project
               </ButtonLink>
             </div>

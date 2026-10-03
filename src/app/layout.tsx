@@ -5,6 +5,8 @@ import { siteConfig } from "@/config/site";
 import { palette } from "@/config/palette";
 import { THEME_SCRIPT } from "@/lib/theme";
 import { ParticleField } from "@/components/ui/ParticleField";
+import { Nav } from "@/components/layout/Nav";
+import { Footer } from "@/components/layout/Footer";
 import "./globals.css";
 
 const instrumentSans = Instrument_Sans({
@@ -88,7 +90,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         >
           Skip to content
         </a>
+        <Nav />
         {children}
+        <Footer />
       </body>
     </html>
   );
